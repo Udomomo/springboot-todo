@@ -7,14 +7,14 @@ servers:
   - url: https://example.com/api/v0
     description: production API
   - url: http://{host}:{port}/api/v0
-    description: 開発用
+    description: for development
     variables:
       host:
         default: localhost
       port:
         default: '10080'
 paths:
-  /:
+  /tasks:
     get:
       summary: List all tasks
       operationId: listTasks
@@ -25,7 +25,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Tasks'
-  /tasks/new:
+        default:
+          description: unexpected error
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
       summary: add a new task
       operationId: addTask
@@ -34,7 +39,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Task'
+              $ref: '#/components/schemas/TaskRequest'
       responses:
         '201':
           description: created
@@ -59,6 +64,12 @@ paths:
           description: id of task
           schema:
             type: string
+      requestBody:
+        description: task to edit
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
       responses:
         '201':
           description: edited
@@ -85,6 +96,10 @@ paths:
       responses:
         '200':
           description: archived task
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
         default:
           description: unexpected error
           content: 
@@ -105,10 +120,10 @@ paths:
       responses:
         '200':
           description: done
-          content:
+          content: 
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: '#/components/schemas/Success'
         default:
           description: unexpected error
           content: 
@@ -132,7 +147,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Task'
+                $ref: '#/components/schemas/Success'
         default:
           description: unexpected error
           content: 
@@ -144,15 +159,31 @@ components:
     Task:
       description: one task object
       type: object
+      allOf:
+        - $ref: '#/components/schemas/TaskRequest'
+        - required:
+          - id
+          - done
+          properties:
+            id:
+              type: integer
+              format: int64
+            done:
+              type: boolean
+      example:
+        id: 1
+        content: Buy notebook
+        urgent: 3
+        important: 3
+        done: false
+    TaskRequest:
+      description: object to create or edit a new task
+      type: object
       required:
-        - id
         - content
         - urgent
         - important
       properties:
-        id:
-          type: integer
-          format: int64
         content:
           type: string
         urgent:
@@ -161,12 +192,28 @@ components:
         important:
           type: integer
           format: int64
-        done:
-          type: boolean
+      example:
+        content: Buy notebook
+        urgent: 3
+        important: 3
     Tasks:
       type: array
       items:
         $ref: '#/components/schemas/Task'
+    Success:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+      example:
+        code: 200
+        message: Success
     Error:
       type: object
       required:
@@ -178,3 +225,6 @@ components:
           format: int32
         message:
           type: string
+      example:
+        code: 500
+        message: Internal Server Error
