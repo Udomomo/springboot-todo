@@ -1,0 +1,6 @@
+{
+  "packageName": "com.udomomo.springboottodo",
+  "apiPackage": "com.udomomo.springboottodo.api.spec",
+  "modelPackage": "com.udomomo.springboottodo.model.spec",
+  "interfaceOnly": true
+}
