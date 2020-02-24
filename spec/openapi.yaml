@@ -173,29 +173,29 @@ components:
       example:
         id: 1
         content: Buy notebook
-        urgent: 3
-        important: 3
+        urgency: 3
+        importance: 3
         done: false
     TaskRequest:
       description: object to create or edit a new task
       type: object
       required:
         - content
-        - urgent
-        - important
+        - urgency
+        - importance
       properties:
         content:
           type: string
-        urgent:
+        urgency:
           type: integer
-          format: int64
-        important:
+          format: int32
+        importance:
           type: integer
-          format: int64
+          format: int32
       example:
         content: Buy notebook
-        urgent: 3
-        important: 3
+        urgency: 3
+        importance: 3
     Tasks:
       type: array
       items:
