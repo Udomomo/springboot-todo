@@ -35,10 +35,14 @@ openApiGenerate {
 			modelDocs: 'false'
 	]
 	typeMappings = [
-	        Task: 'com.udomomo.springboottodo.TaskEntity'
+	        Task: 'com.udomomo.springboottodo.TaskEntity',
+			Success: 'com.udomomo.springboottodo.Success',
+			Error: 'com.udomomo.springboottodo.Error'
 	]
 	importMappings = [
-			Task: 'com.udomomo.springboottodo.TaskEntity'
+			Task: 'com.udomomo.springboottodo.TaskEntity',
+			Success: 'com.udomomo.springboottodo.Success',
+			Error: 'com.udomomo.springboottodo.Error'
 	]
 }
 
