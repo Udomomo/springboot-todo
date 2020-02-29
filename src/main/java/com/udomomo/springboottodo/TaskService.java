@@ -1,11 +1,11 @@
 package com.udomomo.springboottodo;
 
-import com.udomomo.springboottodo.model.spec.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -25,15 +25,25 @@ public class TaskService {
 
     @Transactional
     public void doneTask(String taskId) {
-        TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId)).get();
-        targetTask.setDone(true);
-        taskRepository.save(targetTask);
+        Optional<TaskEntity> targetTask = taskRepository.findById(Integer.valueOf(taskId));
+        if (targetTask.isPresent()) {
+            TaskEntity task = targetTask.get();
+            task.setDone(true);
+            taskRepository.save(task);
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     @Transactional
     public void undoneTask(String taskId) {
-        TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId)).get();
-        targetTask.setDone(false);
-        taskRepository.save(targetTask);
+        Optional<TaskEntity> targetTask = taskRepository.findById(Integer.valueOf(taskId));
+        if (targetTask.isPresent()) {
+            TaskEntity task = targetTask.get();
+            task.setDone(false);
+            taskRepository.save(task);
+        } else {
+            throw new TaskNotExistException(taskId);
+        }
     }
 }
