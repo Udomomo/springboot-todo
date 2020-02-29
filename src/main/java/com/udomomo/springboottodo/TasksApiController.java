@@ -1,7 +1,7 @@
 package com.udomomo.springboottodo;
 
 import com.udomomo.springboottodo.api.spec.TasksApi;
-import com.udomomo.springboottodo.model.spec.Task;
+import com.udomomo.springboottodo.model.spec.Success;
 import com.udomomo.springboottodo.model.spec.TaskRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,5 +31,17 @@ public class TasksApiController implements TasksApi {
         );
 
         return new ResponseEntity<>(taskService.addTask(taskEntity), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Success> doneTask(String taskId) {
+        taskService.doneTask(taskId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Success> undoneTask(String taskId) {
+        taskService.undoneTask(taskId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
