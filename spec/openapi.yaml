@@ -124,8 +124,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Success'
-        default:
-          description: unexpected error
+        '404':
+          description: No task is found with the specified id
           content: 
             application/json:
               schema:
@@ -148,8 +148,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Success'
-        default:
-          description: unexpected error
+        '404':
+          description: No task is found with the specified id
           content: 
             application/json:
               schema:
