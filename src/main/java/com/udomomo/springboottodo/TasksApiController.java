@@ -5,9 +5,6 @@ import com.udomomo.springboottodo.model.spec.TaskRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -50,12 +47,5 @@ public class TasksApiController implements TasksApi {
     public ResponseEntity<Success> undoneTask(String taskId) {
         taskService.undoneTask(taskId);
         return new ResponseEntity<>(new Success(HttpStatus.OK.value(), "success"), HttpStatus.OK);
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({TaskNotExistException.class})
-    @ResponseBody
-    public Error handleTaskNotExistException(TaskNotExistException ex) {
-        return new Error(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
 }
