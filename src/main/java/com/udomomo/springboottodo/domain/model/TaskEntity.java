@@ -1,7 +1,8 @@
-package com.udomomo.springboottodo;
+package com.udomomo.springboottodo.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

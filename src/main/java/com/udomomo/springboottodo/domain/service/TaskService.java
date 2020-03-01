@@ -1,5 +1,8 @@
-package com.udomomo.springboottodo;
+package com.udomomo.springboottodo.domain.service;
 
+import com.udomomo.springboottodo.domain.exception.TaskNotExistException;
+import com.udomomo.springboottodo.domain.model.TaskEntity;
+import com.udomomo.springboottodo.domain.repository.TaskRepository;
 import com.udomomo.springboottodo.model.spec.TaskRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

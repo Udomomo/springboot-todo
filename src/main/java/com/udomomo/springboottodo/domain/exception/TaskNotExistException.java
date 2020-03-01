@@ -1,4 +1,4 @@
-package com.udomomo.springboottodo;
+package com.udomomo.springboottodo.domain.exception;
 
 public class TaskNotExistException extends RuntimeException {
     public TaskNotExistException(String id) {
