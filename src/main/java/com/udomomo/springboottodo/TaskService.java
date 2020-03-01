@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,25 +23,17 @@ public class TaskService {
 
     @Transactional
     public void doneTask(String taskId) {
-        Optional<TaskEntity> targetTask = taskRepository.findById(Integer.valueOf(taskId));
-        if (targetTask.isPresent()) {
-            TaskEntity task = targetTask.get();
-            task.setDone(true);
-            taskRepository.save(task);
-        } else {
-            throw new NoSuchElementException();
-        }
+        TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId))
+                .orElseThrow(() -> new TaskNotExistException(taskId));
+        targetTask.setDone(true);
+        taskRepository.save(targetTask);
     }
 
     @Transactional
     public void undoneTask(String taskId) {
-        Optional<TaskEntity> targetTask = taskRepository.findById(Integer.valueOf(taskId));
-        if (targetTask.isPresent()) {
-            TaskEntity task = targetTask.get();
-            task.setDone(false);
-            taskRepository.save(task);
-        } else {
-            throw new TaskNotExistException(taskId);
-        }
+        TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId))
+                .orElseThrow(() -> new TaskNotExistException(taskId));
+        targetTask.setDone(false);
+        taskRepository.save(targetTask);
     }
 }
