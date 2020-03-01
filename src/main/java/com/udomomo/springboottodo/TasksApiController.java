@@ -23,14 +23,7 @@ public class TasksApiController implements TasksApi {
 
     @Override
     public ResponseEntity<TaskEntity> addTask(@Valid TaskRequest taskRequest) {
-        TaskEntity taskEntity = new TaskEntity(
-                taskRequest.getContent(),
-                taskRequest.getUrgency(),
-                taskRequest.getImportance(),
-                false
-        );
-
-        return new ResponseEntity<>(taskService.addTask(taskEntity), HttpStatus.OK);
+        return new ResponseEntity<>(taskService.addTask(taskRequest), HttpStatus.OK);
     }
 
     @Override

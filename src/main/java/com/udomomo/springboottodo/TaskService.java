@@ -1,5 +1,6 @@
 package com.udomomo.springboottodo;
 
+import com.udomomo.springboottodo.model.spec.TaskRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,13 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskEntity addTask(TaskEntity taskEntity) {
+    public TaskEntity addTask(TaskRequest taskRequest) {
+        TaskEntity taskEntity = new TaskEntity(
+                taskRequest.getContent(),
+                taskRequest.getUrgency(),
+                taskRequest.getImportance(),
+                false
+        );
         return taskRepository.save(taskEntity);
     }
 
