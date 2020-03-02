@@ -32,6 +32,16 @@ public class TaskService {
     }
 
     @Transactional
+    public TaskEntity editTask(String taskId, TaskRequest taskRequest) {
+        TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId))
+                .orElseThrow(() -> new TaskNotExistException(taskId));
+        targetTask.setContent(taskRequest.getContent());
+        targetTask.setUrgency(taskRequest.getUrgency());
+        targetTask.setImportance(taskRequest.getImportance());
+        return taskRepository.save(targetTask);
+    }
+
+    @Transactional
     public void doneTask(String taskId) {
         TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId))
                 .orElseThrow(() -> new TaskNotExistException(taskId));

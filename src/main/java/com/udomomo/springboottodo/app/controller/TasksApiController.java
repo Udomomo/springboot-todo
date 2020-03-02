@@ -31,6 +31,11 @@ public class TasksApiController implements TasksApi {
     }
 
     @Override
+    public ResponseEntity<TaskEntity> editTask(String taskId, @Valid TaskRequest taskRequest) {
+        return new ResponseEntity<>(taskService.editTask(taskId, taskRequest), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Success> doneTask(String taskId) {
         try {
             taskService.doneTask(taskId);
