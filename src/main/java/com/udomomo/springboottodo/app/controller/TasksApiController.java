@@ -1,14 +1,15 @@
 package com.udomomo.springboottodo.app.controller;
 
-import com.udomomo.springboottodo.app.resource.Success;
-import com.udomomo.springboottodo.domain.model.TaskEntity;
-import com.udomomo.springboottodo.domain.exception.TaskNotExistException;
-import com.udomomo.springboottodo.domain.service.TaskService;
 import com.udomomo.springboottodo.api.spec.TasksApi;
+import com.udomomo.springboottodo.app.resource.Success;
+import com.udomomo.springboottodo.domain.exception.TaskNotExistException;
+import com.udomomo.springboottodo.domain.model.TaskEntity;
+import com.udomomo.springboottodo.domain.service.TaskService;
 import com.udomomo.springboottodo.model.spec.TaskRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -19,6 +20,11 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class TasksApiController implements TasksApi {
     private final TaskService taskService;
+
+    @RequestMapping(value = "/")
+    public String index() {
+        return "index";
+    }
 
     @Override
     public ResponseEntity<List<TaskEntity>> listTasks() {
