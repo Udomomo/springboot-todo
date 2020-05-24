@@ -25,8 +25,7 @@ public class TaskService {
         TaskEntity taskEntity = new TaskEntity(
                 taskRequest.getContent(),
                 taskRequest.getUrgency(),
-                taskRequest.getImportance(),
-                false
+                taskRequest.getImportance()
         );
         return taskRepository.save(taskEntity);
     }
@@ -35,17 +34,20 @@ public class TaskService {
     public TaskEntity editTask(String taskId, TaskRequest taskRequest) {
         TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId))
                 .orElseThrow(() -> new TaskNotExistException(taskId));
-        targetTask.setContent(taskRequest.getContent());
-        targetTask.setUrgency(taskRequest.getUrgency());
-        targetTask.setImportance(taskRequest.getImportance());
-        return taskRepository.save(targetTask);
+        TaskEntity taskEntity = new TaskEntity(
+                targetTask.getId(),
+                taskRequest.getContent(),
+                taskRequest.getUrgency(),
+                taskRequest.getImportance()
+        );
+        return taskRepository.save(taskEntity);
     }
 
     @Transactional
     public void doneTask(String taskId) {
         TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId))
                 .orElseThrow(() -> new TaskNotExistException(taskId));
-        targetTask.setDone(true);
+        targetTask.makeDone();
         taskRepository.save(targetTask);
     }
 
@@ -53,7 +55,7 @@ public class TaskService {
     public void undoneTask(String taskId) {
         TaskEntity targetTask = taskRepository.findById(Integer.valueOf(taskId))
                 .orElseThrow(() -> new TaskNotExistException(taskId));
-        targetTask.setDone(false);
+        targetTask.makeUndone();
         taskRepository.save(targetTask);
     }
 }
